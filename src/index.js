@@ -5,6 +5,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 // Inicializaciones
 const app = express();
+require('./database');
 
 // Configuración
 app.set('port', process.env.PORT || 3000);
@@ -29,9 +30,11 @@ app.use(session({
 // Variables Globales
 
 // Rutas
-
+app.use(require('./routes/index'));
+app.use(require('./routes/notes'));
+app.use(require('./routes/users'));
 // Archivos estáticos
-
+app.use(express.static(path.join(__dirname, 'public')));
 // Inicializar el servidor
 app.listen(app.get('port'), () => {
     console.log('Servidor en el puerto', app.get('port'));
